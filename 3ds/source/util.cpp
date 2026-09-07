@@ -27,7 +27,7 @@
 #include "util.hpp"
 #include "backupsize.hpp"
 #include "configuration.hpp"
-#include "ftpserver.hpp"
+#include "ftpservice.hpp"
 #include "i18n.hpp"
 #include "loader.hpp"
 #include "paths.hpp"

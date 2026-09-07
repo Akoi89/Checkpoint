@@ -24,7 +24,7 @@
  *         reasonable ways as different from the original version.
  */
 
-#include "ftpserver.hpp"
+#include "ftpservice.hpp"
 #include "configuration.hpp"
 #include "ftpServer.h"
 #include "logging.hpp"

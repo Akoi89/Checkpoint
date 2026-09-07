@@ -29,7 +29,7 @@
 #include "KeyboardManager.hpp"
 #include "TitlePickerOverlay.hpp"
 #include "configuration.hpp"
-#include "ftpserver.hpp"
+#include "ftpservice.hpp"
 #include "glyphs.hpp"
 #include "gui.hpp"
 #include "i18n.hpp"

@@ -33,7 +33,7 @@
 #include "backupsize.hpp"
 #include "colors.hpp"
 #include "configuration.hpp"
-#include "ftpserver.hpp"
+#include "ftpservice.hpp"
 #include "i18n.hpp"
 #include "loader.hpp"
 #include "scriptlogview.hpp"

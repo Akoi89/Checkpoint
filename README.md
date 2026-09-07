@@ -1,6 +1,8 @@
-# Checkpoint <a href="https://github.com/BernardoGiordano/Checkpoint/releases/latest"><img src="https://img.shields.io/github/downloads/BernardoGiordano/Checkpoint/total.svg"></a>
+# Checkpoint (3DS fork with Erase save data)
 
-A fast and simple homebrew save management framework for 3DS and Switch, written in C++.
+This is a fork of [BernardoGiordano/Checkpoint](https://github.com/BernardoGiordano/Checkpoint) that keeps only the 3DS build and adds one feature: erasing a title's save data on the console itself. The Switch code was removed from this fork, not because anything was wrong with it, but because the Switch can already delete saves from its own system settings. For the Switch version, and for everything upstream, go to the original project.
+
+A fast and simple homebrew save management framework for 3DS, written in C++.
 
 <p align="center"><img src="https://i.imgur.com/EaY1vRB.jpeg" />
 <img src="https://i.imgur.com/OrZ624x.jpeg" /></p>
@@ -19,10 +21,9 @@ Checkpoint is a **framework**, not just an app: everything it can do to a save i
 
 Checkpoint backs up and restores save data for:
 
-* **3DS**: 3DS **cartridges and digital titles** (including demos), extdata, **DS** cartridges, **DSiWare** and **GBA Virtual Console** titles
-* **Switch**: saves for the titles you have played, with title information loaded automatically
+* 3DS **cartridges and digital titles** (including demos), extdata, **DS** cartridges, **DSiWare** and **GBA Virtual Console** titles
 
-Both versions share the same core feature set:
+Core feature set:
 
 * A completely redesigned user interface, with **light and dark mode** theming
 * A **Settings section** to configure everything directly from the console: favorites, filters, additional save folders and more, with no manual file editing required
@@ -34,20 +35,13 @@ Both versions share the same core feature set:
 * A **scripting engine**, with bundled scripts for cheat management and Google Drive save sync, and a documented API for writing your own
 * An **HTTP log server**, to view Checkpoint's logs in real time from any browser on your network
 
-On 3DS, Checkpoint also provides:
+Added in this fork:
 
 * **Erase save data**, which clears a title's save on the console itself so the game starts over from scratch. It is off by default: turn on "Allow erasing save data" in Settings > General, then pick **Erase save data** from the SELECT menu. Two confirmations follow, and the second one tells you how many backups of that title you have. Works on 3DS and DSiWare saves; DS cartridges and GBA Virtual Console saves cannot be erased this way.
 
-On Switch, Checkpoint also provides:
-
-* A rendering backend built on **deko3d**, which makes the application ~70% smaller than before
-* **1080p docked mode** support, alongside 720p in handheld
-* A **USB MTP server**, which makes the console show up as a portable device on your PC so you can drag backups off over the charging cable, with no network involved
-* File-by-file verification after restore, and safer handling of large save restores
-
 ## Scripting
 
-Checkpoint runs **scripts** written in C, interpreted on the console. A script is a single `.c` file on the SD card: no compiler, no rebuild, no reflash. Put it in the right folder and it shows up in the **Scripts** menu (**SELECT** on 3DS, **Minus** on Switch) the next time you launch the app.
+Checkpoint runs **scripts** written in C, interpreted on the console. A script is a single `.c` file on the SD card: no compiler, no rebuild, no reflash. Put it in the right folder and it shows up in the **Scripts** menu (**SELECT**) the next time you launch the app.
 
 Scripts get a native API — `#include <checkpoint.h>` — that reaches the same machinery the app itself uses:
 
@@ -60,12 +54,12 @@ Scripts get a native API — `#include <checkpoint.h>` — that reaches the same
 * **UI**: messages, confirmations, single and multiple choice pickers, keyboard and numeric keypad, a status line and nested progress bars, all rendered by Checkpoint itself
 * Plus picoc's C standard library: `stdio`, `stdlib`, `string`, `unistd`, `ctype`, `math`, `time`
 
-A running script owns the screen: its output streams into a scrollable log pane while its dialogs and progress bars take the other screen (3DS) or a card over the transcript (Switch). Holding **B** aborts any script, even one stuck in an infinite loop, without rebooting the console.
+A running script owns the screen: its output streams into a scrollable log pane while its dialogs and progress bars take the other screen. Holding **B** aborts any script, even one stuck in an infinite loop, without rebooting the console.
 
 A few scripts ship with the app already:
 
 * **browser** — file browser for the SD card and for a title's live save archive: copy, move, rename, delete, make folders, read properties, zip and unzip, one item or a batch at a time, with either side of a transfer on the card or inside a save
-* **sharkive** — cheat manager: downloads the [Sharkive](https://github.com/FlagBrew/Sharkive) database, lets you tick cheats per title, and writes the cheat files Luma3DS (3DS) or Atmosphere (Switch) expect
+* **sharkive** — cheat manager: downloads the [Sharkive](https://github.com/FlagBrew/Sharkive) database, lets you tick cheats per title, and writes the cheat files Luma3DS or Atmosphere expect
 * **googledrive** — backs up your save backups to your own Google Drive, with a device-code sign-in and per-backup zips ([setup guide](scripts/googledrive.md))
 * **webdav** — the same for any WebDAV server you already have (Nextcloud, Synology, `rclone serve webdav`, …): uploads only what isn't there yet, and can download a backup back onto the console ([setup guide](scripts/webdav.md))
 * **playcoins** — sets the console's Play Coins (3DS)
@@ -86,8 +80,6 @@ chlink is a single, dependency-free executable available for Windows, macOS and 
 
 You can use Checkpoint for 3DS with both cfw and Rosalina-based Homebrew Launchers. *hax-based Homebrew Launchers are not supported by Checkpoint.
 
-Checkpoint for Switch runs on homebrew launcher. Make sure you're running up-to-date payloads.
-
 The first launch will take longer than usual, due to the working directories being created - Checkpoint will be significantly faster upon launch from then on.
 
 ## Working path
@@ -104,15 +96,6 @@ Checkpoint relies on the following folders to store the files it generates. Note
 * **`sdmc:/3ds/Checkpoint/scripts/universal`**: your own scripts, offered for every title
 * **`sdmc:/3ds/Checkpoint/scripts/<title id>`**: your own scripts, offered for that title only
 
-### Switch
-
-* **`sdmc:/switch/Checkpoint`**: root path
-* **`sdmc:/switch/Checkpoint/config.json`**: configuration file
-* **`sdmc:/switch/Checkpoint/logs`**: log files
-* **`sdmc:/switch/Checkpoint/saves/<title id> <game title>`**: root path for all the save backups for a generic game
-* **`sdmc:/switch/Checkpoint/scripts/universal`**: your own scripts, offered for every title
-* **`sdmc:/switch/Checkpoint/scripts/<title id>`**: your own scripts, offered for that title only
-
 ## Configuration
 
 All the options that used to require manual edits to the configuration file can now be managed from the Settings section, directly on the console. The `config.json` file is still stored in Checkpoint's working directory, but you're not required to touch it anymore.
@@ -125,21 +108,19 @@ Additionally, you can receive real-time support by joining FlagBrew's Discord se
 
 ## Building
 
-devkitARM and devkitA64 are required to compile Checkpoint for 3DS and Switch, respectively. Learn more at [devkitpro.org](https://devkitpro.org/wiki/Getting_Started). Install or update dependencies as follows.
+devkitARM is required to compile Checkpoint for 3DS. Learn more at [devkitpro.org](https://devkitpro.org/wiki/Getting_Started). Install or update dependencies as follows.
 
 The scripting engine lives in a submodule, so a fresh clone needs:
 
 `git submodule update --init --recursive`
 
-### 3DS version
+`dkp-pacman -S libctru citro3d citro2d tex3ds 3ds-curl 3ds-mbedtls 3ds-zlib`
 
-`dkp-pacman -S libctru citro3d citro2d tex3ds 3ds-curl 3ds-mbedtls`
+Packaging a `.cia` also needs `makerom` and `bannertool` on your PATH. Neither is in devkitPro's repositories; get makerom from [Project_CTR](https://github.com/3DSGuy/Project_CTR/releases) and bannertool from the [maintained fork](https://github.com/carstene1ns/3ds-bannertool/releases).
 
-### Switch version
+Build from the repository root with `make 3ds`.
 
-`dkp-pacman -S libnx switch-pkg-config deko3d switch-harfbuzz switch-freetype switch-libjpeg-turbo switch-curl switch-mbedtls`
-
-Build from the repository root with `make 3ds` or `make switch`.
+On Windows, note that the build writes every object into one flat folder, and upstream has two source files whose names differ only in case (`ftpserver.cpp` and ftpd's `ftpServer.cpp`). This fork renames the app's own file to `ftpservice.cpp` so the build links on a case-insensitive filesystem.
 
 ## License
 

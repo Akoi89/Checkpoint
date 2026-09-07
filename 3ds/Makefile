@@ -57,7 +57,7 @@ GFXBUILD		:=	$(ROMFS)/gfx
 SCRIPTSRC		:=	../scripts
 ROMFS_SCRIPTS	:=	$(ROMFS)/scripts
 
-MONO_TTF		:=	../switch/romfs/fonts/SpaceMono-Regular.ttf
+MONO_TTF		:=	assets/fonts/SpaceMono-Regular.ttf
 MONO_BCFNT		:=	$(ROMFS)/fonts/SpaceMono.bcfnt
 # 7pt: mkbcfnt turns that into a 14px line feed and a 6px advance, so the pane
 # holds ~15 rows of ~62 columns on the 400x240 top screen. A transcript is

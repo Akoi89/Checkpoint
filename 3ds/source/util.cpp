@@ -50,7 +50,7 @@ namespace {
 Result consoleDisplayError(const std::string& message, Result res)
 {
     consoleInit(GFX_TOP, nullptr);
-    printf("\x1b[2;13HCheckpoint v%d.%d.%d-%s", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO, GIT_REV);
+    printf("\x1b[2;13HCheckpoint v%d.%d.%d%s-%s", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO, VERSION_SUFFIX, GIT_REV);
     printf("\x1b[5;1HError during startup: \x1b[31m0x%08lX\x1b[0m", res);
     printf("\x1b[8;1HDescription: \x1b[33m%s\x1b[0m", message.c_str());
     printf("\x1b[29;16HPress START to exit.");
@@ -440,5 +440,5 @@ std::string StringUtils::humanBytes(u64 bytes)
 
 std::string StringUtils::versionString(void)
 {
-    return StringUtils::format("v%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO);
+    return StringUtils::format("v%d.%d.%d%s", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO, VERSION_SUFFIX);
 }

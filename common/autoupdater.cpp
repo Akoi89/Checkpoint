@@ -9,6 +9,9 @@
  */
 
 #include "autoupdater.hpp"
+#ifndef VERSION_SUFFIX
+#define VERSION_SUFFIX ""
+#endif
 #include "json.hpp"
 #include "logging.hpp"
 #include <atomic>
@@ -33,7 +36,7 @@ namespace {
     std::atomic<size_t> g_total{0};
     std::atomic<bool> g_busy{false};
 
-    constexpr const char* RELEASE_API = "https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest";
+    constexpr const char* RELEASE_API = "https://api.github.com/repos/Akoi89/Checkpoint/releases/latest";
 
     size_t appendString(char* data, size_t size, size_t count, void* user)
     {
@@ -91,7 +94,12 @@ namespace {
         if (*start == 'v' || *start == 'V')
             start++;
         char tail = '\0';
-        return sscanf(start, "%d.%d.%d%c", &major, &minor, &micro, &tail) == 3 && major >= 0 && minor >= 0 && micro >= 0;
+        const int n = sscanf(start, "%d.%d.%d%c", &major, &minor, &micro, &tail);
+        // A bare number, or the number followed by exactly this fork's suffix
+        // ("v5.2.0D"). Anything else after the number (a pre-release marker,
+        // say) is still rejected.
+        const bool suffixOk = n == 4 && VERSION_SUFFIX[0] != '\0' && VERSION_SUFFIX[1] == '\0' && tail == VERSION_SUFFIX[0];
+        return (n == 3 || suffixOk) && major >= 0 && minor >= 0 && micro >= 0;
     }
 
     bool isNewer(const std::string& tag)

@@ -3,6 +3,10 @@ SUBDIRS = 3ds
 VERSION_MAJOR	:=	5
 VERSION_MINOR	:=	2
 VERSION_MICRO	:=	0
+# Marks a build of this fork. Shown after the number everywhere the app
+# prints its version; never part of the numeric CIA version or the version
+# a wireless-transfer peer compares against.
+VERSION_SUFFIX	:=	D
 GIT_REV	:=	$(shell git rev-parse --short HEAD 2>/dev/null)
 ifeq ($(strip $(GIT_REV)),)
 GIT_REV	:=	unknown
@@ -14,7 +18,7 @@ clean:
 	@for dir in $(SUBDIRS); do $(MAKE) clean -C $$dir; done
 
 3ds:
-	@$(MAKE) -C 3ds VERSION_MAJOR=${VERSION_MAJOR} VERSION_MINOR=${VERSION_MINOR} VERSION_MICRO=${VERSION_MICRO} GIT_REV=${GIT_REV}
+	@$(MAKE) -C 3ds VERSION_MAJOR=${VERSION_MAJOR} VERSION_MINOR=${VERSION_MINOR} VERSION_MICRO=${VERSION_MICRO} VERSION_SUFFIX=${VERSION_SUFFIX} GIT_REV=${GIT_REV}
 
 cli:
 	@$(MAKE) -C tools/chlink

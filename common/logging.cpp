@@ -25,6 +25,9 @@
  */
 
 #include "logging.hpp"
+#ifndef VERSION_SUFFIX
+#define VERSION_SUFFIX ""
+#endif
 
 #if defined(__3DS__)
 #include "server.hpp"
@@ -91,7 +94,7 @@ void Logging::init()
 
     logBuffer.reserve(LOG_BUFFER_SIZE);
 
-    std::string versionInfo = std::format("Checkpoint v{:d}.{:d}.{:d}-{:s}", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO, GIT_REV);
+    std::string versionInfo = std::format("Checkpoint v{:d}.{:d}.{:d}{:s}-{:s}", VERSION_MAJOR, VERSION_MINOR, VERSION_MICRO, VERSION_SUFFIX, GIT_REV);
     info(versionInfo);
 
 #if defined(SERVER_HPP)

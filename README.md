@@ -59,7 +59,7 @@ A running script owns the screen: its output streams into a scrollable log pane 
 A few scripts ship with the app already:
 
 * **browser** — file browser for the SD card and for a title's live save archive: copy, move, rename, delete, make folders, read properties, zip and unzip, one item or a batch at a time, with either side of a transfer on the card or inside a save
-* **sharkive** — cheat manager: downloads the [Sharkive](https://github.com/FlagBrew/Sharkive) database, lets you tick cheats per title, and writes the cheat files Luma3DS or Atmosphere expect
+* **sharkive** — cheat manager: downloads the [Sharkive](https://github.com/FlagBrew/Sharkive) database, lets you tick cheats per title, and writes the cheat files Luma3DS expects
 * **googledrive** — backs up your save backups to your own Google Drive, with a device-code sign-in and per-backup zips ([setup guide](scripts/googledrive.md))
 * **webdav** — the same for any WebDAV server you already have (Nextcloud, Synology, `rclone serve webdav`, …): uploads only what isn't there yet, and can download a backup back onto the console ([setup guide](scripts/webdav.md))
 * **playcoins** — sets the console's Play Coins (3DS)

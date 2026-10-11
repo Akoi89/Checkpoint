@@ -43,7 +43,7 @@ Added in this fork:
 
 Checkpoint runs **scripts** written in C, interpreted on the console. A script is a single `.c` file on the SD card: no compiler, no rebuild, no reflash. Put it in the right folder and it shows up in the **Scripts** menu (**SELECT**) the next time you launch the app.
 
-Scripts get a native API — `#include <checkpoint.h>` — that reaches the same machinery the app itself uses:
+Scripts get a native API, `#include <checkpoint.h>`, that reaches the same machinery the app itself uses:
 
 * **Titles**: the whole catalog, ids, names, product codes, cart/save/extdata flags, backup folders
 * **Save data**: open a title's save (or 3DS extdata, or console-wide shared extdata), then read, write, delete, list and commit files inside it, and create, rename or remove its folders
@@ -58,13 +58,13 @@ A running script owns the screen: its output streams into a scrollable log pane 
 
 A few scripts ship with the app already:
 
-* **browser** — file browser for the SD card and for a title's live save archive: copy, move, rename, delete, make folders, read properties, zip and unzip, one item or a batch at a time, with either side of a transfer on the card or inside a save
-* **sharkive** — cheat manager: downloads the [Sharkive](https://github.com/FlagBrew/Sharkive) database, lets you tick cheats per title, and writes the cheat files Luma3DS expects
-* **googledrive** — backs up your save backups to your own Google Drive, with a device-code sign-in and per-backup zips ([setup guide](scripts/googledrive.md))
-* **webdav** — the same for any WebDAV server you already have (Nextcloud, Synology, `rclone serve webdav`, …): uploads only what isn't there yet, and can download a backup back onto the console ([setup guide](scripts/webdav.md))
-* **playcoins** — sets the console's Play Coins (3DS)
-* **extdata** — creates the extdata archive a title has never written, so an extdata backup has somewhere to restore into (3DS)
-* **notifications** — backs up and restores everything behind the Notifications applet, the SpotPass content and the notification list alike, none of which belongs to a title (3DS)
+* **browser**: file browser for the SD card and for a title's live save archive: copy, move, rename, delete, make folders, read properties, zip and unzip, one item or a batch at a time, with either side of a transfer on the card or inside a save
+* **sharkive**: cheat manager: downloads the [Sharkive](https://github.com/FlagBrew/Sharkive) database, lets you tick cheats per title, and writes the cheat files Luma3DS expects
+* **googledrive**: backs up your save backups to your own Google Drive, with a device-code sign-in and per-backup zips ([setup guide](scripts/googledrive.md))
+* **webdav**: the same for any WebDAV server you already have (Nextcloud, Synology, `rclone serve webdav`, …): uploads only what isn't there yet, and can download a backup back onto the console ([setup guide](scripts/webdav.md))
+* **playcoins**: sets the console's Play Coins (3DS)
+* **extdata**: creates the extdata archive a title has never written, so an extdata backup has somewhere to restore into (3DS)
+* **notifications**: backs up and restores everything behind the Notifications applet, the SpotPass content and the notification list alike, none of which belongs to a title (3DS)
 
 **Writing your own** is documented in full in [`scripts/README.md`](scripts/README.md): the API reference, the interpreter's limits, recipes, and a checklist for both human and AI authors. [`scripts/examples/example.c`](scripts/examples/example.c) is a runnable guided tour, one menu entry per API area. Before copying a script to the SD card, parse-check it on your PC with `tools/scriptlint.sh`.
 
